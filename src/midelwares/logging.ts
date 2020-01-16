@@ -1,11 +1,16 @@
 // eslint-disable-next-line import/no-unresolved
-import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import { NextFunction, Response } from 'express';
 import safeStringify from 'fast-safe-stringify';
 import { v4 as randomUuid } from 'uuid';
 
 import {
-  IAPIGateWay, ILoggingMidlewareParams, IObfuscationObject, IObject, IRequest,
+  IAPIGateWay,
+  IAPIGatewayProxyEvent,
+  IContext,
+  ILoggingMidlewareParams,
+  IObfuscationObject,
+  IObject,
+  IRequest,
 } from '../interface';
 import { deepCopy, getProperty, setProperty } from './helper';
 
@@ -50,10 +55,10 @@ export default (params?: ILoggingMidlewareParams) => {
           requestContext: {
             requestId,
           },
-        } = {} as APIGatewayProxyEvent,
+        } = {} as IAPIGatewayProxyEvent,
         context: {
           awsRequestId,
-        } = {} as Context,
+        } = {} as IContext,
       } = {} as IAPIGateWay,
     } = req;
     const id = randomUuid();

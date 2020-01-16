@@ -12,6 +12,10 @@ export interface IError extends Error {
   validationErrors?: string[];
 }
 
+export type IAPIGatewayProxyEvent = APIGatewayProxyEvent;
+
+export type IContext = Context;
+
 export interface IAPIGateWay {
   event?: APIGatewayProxyEvent;
   context?: Context;

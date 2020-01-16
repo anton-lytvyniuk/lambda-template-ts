@@ -1,8 +1,8 @@
 /* eslint-disable import/prefer-default-export */
-import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import ase from 'aws-serverless-express';
 
 import createApp from './app';
+import { IAPIGatewayProxyEvent, IContext } from './interface';
 
 const getServer = Promise
   .resolve(createApp())
@@ -12,6 +12,6 @@ const getServer = Promise
     process.exit(1);
   });
 
-export function handler(event: APIGatewayProxyEvent, context: Context) {
+export function handler(event: IAPIGatewayProxyEvent, context: IContext) {
   getServer.then((server) => ase.proxy(server, event, context));
 }
