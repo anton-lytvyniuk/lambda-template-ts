@@ -1,0 +1,49 @@
+{
+  "name": "lambda-template",
+  "version": "1.0.0",
+  "description": "The template of lambda function with apigateway based on aws-serverless-express ",
+  "main": "src/lambda.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .ts",
+    "tslint": "tslint --project ./",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anton-lytvyniuk/lambda-template.git"
+  },
+  "keywords": [
+    "Lambda",
+    "Template",
+    "Scratch"
+  ],
+  "author": "Lytvyniuk Anton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anton-lytvyniuk/lambda-template/issues"
+  },
+  "homepage": "https://github.com/anton-lytvyniuk/lambda-template#readme",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.39",
+    "@types/aws-serverless-express": "^3.3.2",
+    "@types/express": "^4.17.2",
+    "@types/http-status-codes": "^1.2.0",
+    "@types/uuid": "^3.4.6",
+    "@typescript-eslint/eslint-plugin": "^2.16.0",
+    "@typescript-eslint/parser": "^2.16.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "ts-node": "^8.6.2",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "aws-serverless-express": "^3.3.6",
+    "express": "^4.17.1",
+    "fast-safe-stringify": "^2.0.7",
+    "http-status-codes": "^1.4.0",
+    "uuid": "^3.3.3"
+  }
+}
