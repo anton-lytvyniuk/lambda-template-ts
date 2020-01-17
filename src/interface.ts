@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-import { APIGatewayProxyEvent, Context } from 'aws-lambda';
+import { APIGatewayEventRequestContext, APIGatewayProxyEvent, Context } from 'aws-lambda';
 import { Application, Request } from 'express';
 
 export interface IObject {
@@ -15,6 +15,8 @@ export interface IError extends Error {
 export type IAPIGatewayProxyEvent = APIGatewayProxyEvent;
 
 export type IContext = Context;
+
+export type IAPIGatewayEventRequestContext = APIGatewayEventRequestContext;
 
 export interface IAPIGateWay {
   event?: APIGatewayProxyEvent;

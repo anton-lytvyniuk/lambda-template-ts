@@ -1,0 +1,14 @@
+{
+  "ignore": [
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    ".git",
+    "node_modules"
+  ],
+  "watch": [
+    "src",
+    "config/swagger.yml"
+  ],
+  "exec": "node -r ts-node/register ./src/app-local",
+  "ext": "ts"
+}

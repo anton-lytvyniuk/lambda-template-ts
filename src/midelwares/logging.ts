@@ -5,6 +5,7 @@ import { v4 as randomUuid } from 'uuid';
 
 import {
   IAPIGateWay,
+  IAPIGatewayEventRequestContext,
   IAPIGatewayProxyEvent,
   IContext,
   ILoggingMidlewareParams,
@@ -54,7 +55,7 @@ export default (params?: ILoggingMidlewareParams) => {
         event: {
           requestContext: {
             requestId,
-          },
+          } = {} as IAPIGatewayEventRequestContext,
         } = {} as IAPIGatewayProxyEvent,
         context: {
           awsRequestId,
