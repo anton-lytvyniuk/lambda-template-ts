@@ -3,6 +3,9 @@ import { NextFunction, Response } from 'express';
 import safeStringify from 'fast-safe-stringify';
 import { v4 as randomUuid } from 'uuid';
 
+import logger from '../utils/logger';
+import obfuscate from '../utils/obfuscator';
+
 import {
   IAPIGateWay,
   IAPIGatewayEventRequestContext,
@@ -13,25 +16,9 @@ import {
   IObject,
   IRequest,
 } from '../interface';
-import { deepCopy, getProperty, setProperty } from './helper';
 
 const CORRELATION_ID_HEADER_NAME = 'correlation-id';
-const OBFUSCATED_STRING = '*******';
 const HEADERS_TO_OBFUSCATE = ['authorization'];
-
-const obfuscate = (object: IObject, propertiesToObfuscate = [] as string[]) => {
-  if (typeof object !== 'object' || !propertiesToObfuscate.length) {
-    return object;
-  }
-  const obfuscatedObject = deepCopy(object);
-
-  propertiesToObfuscate.forEach((propertyName) => {
-    if (getProperty(obfuscatedObject, propertyName) !== undefined) {
-      setProperty(obfuscatedObject, propertyName, OBFUSCATED_STRING);
-    }
-  });
-  return obfuscatedObject;
-};
 
 export default (params?: ILoggingMidlewareParams) => {
   const {
@@ -79,7 +66,7 @@ export default (params?: ILoggingMidlewareParams) => {
       };
 
       args.forEach((arg, ind) => { obj[`log${ind || ''}`] = arg; });
-      console.log(safeStringify(obj));
+      logger.info(safeStringify(obj));
     };
 
     if (handleFinishRequest) {
@@ -87,7 +74,7 @@ export default (params?: ILoggingMidlewareParams) => {
     }
 
     if (loggingRequest) {
-      console.log(safeStringify({
+      logger.info(safeStringify({
         body: body ? safeStringify(obfuscate(body, bodyToObfuscate)) : null,
         headers: safeStringify(obfuscate(headers, headersToObfuscate || HEADERS_TO_OBFUSCATE)),
         query: query ? safeStringify(obfuscate(query, queryToObfuscate)) : null,
