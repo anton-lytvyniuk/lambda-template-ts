@@ -3,8 +3,8 @@ import aseMiddleware from 'aws-serverless-express/middleware';
 import express from 'express';
 
 import * as httpbinController from './controllers/httpbin';
-import errorHandler from './midelwares/errorHandler';
-import loggingMidleware from './midelwares/logging';
+import errorMiddleware from './middlewares/errorMiddleware';
+import loggingMiddleware from './middlewares/loggingMiddleware';
 
 export default () => {
   const app = express();
@@ -14,7 +14,7 @@ export default () => {
   return app
     .use(express.json())
     .use(aseMiddleware.eventContext())
-    .use(loggingMidleware({ loggingRequest: true }))
+    .use(loggingMiddleware({ loggingRequest: true }))
     .get('/v1/httpbin', httpbinController.get)
-    .use(errorHandler);
+    .use(errorMiddleware);
 };
