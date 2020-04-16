@@ -13,7 +13,6 @@ import {
   IContext,
   ILoggingMidlewareParams,
   IObfuscationObject,
-  IObject,
   IRequest,
 } from '../interface';
 
@@ -40,6 +39,7 @@ export default (params?: ILoggingMidlewareParams) => {
       query,
       apiGateway: {
         event: {
+          path,
           requestContext: {
             requestId,
           } = {} as IAPIGatewayEventRequestContext,
@@ -54,20 +54,15 @@ export default (params?: ILoggingMidlewareParams) => {
 
     res.append(CORRELATION_ID_HEADER_NAME, correlationId);
 
-    req.app.logger = (...args: any[]) => {
-      const obj: IObject = {
-        awsRequestId,
-        correlation_id: correlationId,
-        id,
-        method,
-        originalUrl,
-        path_with_params:
+    req.app.logger = logger.extend({
+      awsRequestId,
+      correlation_id: correlationId,
+      id,
+      method,
+      originalUrl,
+      path,
       requestId,
-      };
-
-      args.forEach((arg, ind) => { obj[`log${ind || ''}`] = arg; });
-      logger.info(safeStringify(obj));
-    };
+    });
 
     if (handleFinishRequest) {
       res.on('finish', () => handleFinishRequest(req));
@@ -77,6 +72,7 @@ export default (params?: ILoggingMidlewareParams) => {
       logger.info(safeStringify({
         body: body ? safeStringify(obfuscate(body, bodyToObfuscate)) : null,
         headers: safeStringify(obfuscate(headers, headersToObfuscate || HEADERS_TO_OBFUSCATE)),
+        path: req.path || req.apiGateway?.event?.path,
         query: query ? safeStringify(obfuscate(query, queryToObfuscate)) : null,
       }));
     }

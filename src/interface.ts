@@ -2,6 +2,8 @@
 import { APIGatewayEventRequestContext, APIGatewayProxyEvent, Context } from 'aws-lambda';
 import { Application, Request } from 'express';
 
+import { ILogger } from './utils/logger';
+
 export interface IObject {
   [key: string]: any;
 }
@@ -24,7 +26,7 @@ export interface IAPIGateWay {
 }
 
 export interface IAplication extends Application {
-  logger?: (...args: any[]) => void;
+  logger?: ILogger;
 }
 
 export interface IRequest extends Request {
