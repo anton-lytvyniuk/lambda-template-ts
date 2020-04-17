@@ -33,7 +33,7 @@ export function createLogger(meta = {} as ILoggerObject, initialLoger = console)
     info: prepareLog(loggerMeta, initialLoger.info),
     warn: prepareLog(loggerMeta, initialLoger.warn),
     extend(extendedMeta: ILoggerObject) {
-      return createLogger({ ...loggerMeta, extendedMeta }, initialLoger);
+      return createLogger({ ...loggerMeta, ...extendedMeta }, initialLoger);
     },
   };
 }
